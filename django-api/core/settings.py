@@ -84,12 +84,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE"  : env("DB_ENGINE"  , default="django.db.backends.sqlite3"),
-        "NAME"    : env("DB_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER"    : env("DB_USER"    , default=None),
-        "PASSWORD": env("DB_PASSWORD", default=None),
-        "HOST"    : env("DB_HOST"    , default=None),
-        "PORT"    : env("DB_PORT"    , default=None),
+        "ENGINE"  :  os.environ("DB_ENGINE"),
+        "NAME"    :  os.environ("DB_NAME"),
+        "USER"    :  os.environ("DB_USER"),
+        "PASSWORD":  os.environ("DB_PASSWORD"),
+        "HOST"    :  os.environ("DB_HOST"),
+        "PORT"    :  os.environ("DB_PORT"),
     }
 }
 
@@ -127,7 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -155,7 +155,7 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS=True
 
 # Load the default ones
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1", "http://localhost"  "http://127.0.0.1:3000", "http://localhost:3001", "http://127.0.0.1:3001", ".vercel.app", ".now.sh"]
 
 # Leaded from Environment
 CORS_ALLOWED_ORIGINS_ENV = env("CORS_ALLOWED_ORIGINS", default=None)
@@ -170,3 +170,7 @@ if CORS_ALLOWED_ORIGINS_ENV:
 
 TESTING = False
 TEST_RUNNER = "core.test_runner.CoreTestRunner"
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'static')
+DEBUG = True
